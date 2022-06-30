@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="bitta_configuration_tree" model="ir.ui.view">
+        <field name="name">Betta.configuration.form</field>
+        <field name="model">bitta.configuration</field>
+        <field name="arch" type="xml">
+            <tree edit="1" editable="bottom">
+<!--                <field name="from_bag"/>-->
+                <field name="to_bag"/>
+                <field name="price"/>
+            </tree>
+        </field>
+    </record>
+
+      <record id="bitta_configuration_action" model="ir.actions.act_window">
+        <field name="name">Betta Configuration</field>
+        <field name="res_model">bitta.configuration</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new warr
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="batta_brothers_configuration" action="bitta_configuration_action"
+              name="Betta Configuration"
+              sequence="5" parent="account.menu_finance_receivables"/>
+
+</odoo>

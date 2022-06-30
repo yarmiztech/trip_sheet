@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="fleet_vehicle_brothers_inherit" model="ir.ui.view">
+        <field name="name">Fleet Vehicle Inherit</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='driver_id']" position="before">
+                <field name="type_of_charge" widget="radio" options="{'horizontal': true}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_move_form_trip" model="ir.ui.view">
+        <field name="name">account.move.form.debit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <button name="action_reverse" position="after">
+    <button name="action_generate_trip" type="object" string="Generate Trip Sheet" states="posted" class="oe_highlight" />
+            </button>
+        </field>
+    </record>
+
+
+
+
+    <record id="brothers_trip_sheet_tree" model="ir.ui.view">
+        <field name="name">brothers.trip.sheet.form</field>
+        <field name="model">brothers.trip.sheet</field>
+        <field name="arch" type="xml">
+            <tree>
+                 <field name="create_date"/>
+                <field name="vehicle_id"/>
+<!--                <field name="vehicle_number" />-->
+<!--                <field name="company_type" />-->
+                <field name="internal_company"/>
+                <field name="partner_id"/>
+                <field name="from_invoice"/>
+                <field name="company_id"/>
+<!--                <field name="trip_invoice_id" />-->
+                <field name="type_of_charge"/>
+                <field name="total_bags"/>
+                <field name="total_kms"/>
+                <field name="km_charge"/>
+                <field name="betta_charge"/>
+                <field name="final_invoice_amount"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record id="brothers_trip_sheet_view" model="ir.ui.view">
+        <field name="name">brothers.trip.sheet.form</field>
+        <field name="model">brothers.trip.sheet</field>
+        <field name="arch" type="xml">
+            <form>
+                 <header>
+                    <button name="action_trip_marked"
+                            type="object"
+                            string="Mark As Done"
+                            class="oe_highlight" id="mark_trip"/>
+
+                     <field name="state" select="2" widget="statusbar"
+                           statusbar_visible="draft,done"/>
+                    </header>
+
+                <sheet>
+                     <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" name="action_trip_invoices"
+                                string="Trip Invoice" type="object"
+                                attrs="{'invisible':[('trip_invoice_id','=',False)]}" icon="fa-bars"/>
+                     </div>
+
+                     <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="vehicle_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="vehicle_number" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="company_type" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="internal_company" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="partner_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="transport_receipt" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="gate_pass" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="location" attrs="{'readonly':[('state','!=','draft')]}"/>
+
+                        </group>
+                        <group>
+                            <field name="create_date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="from_invoice" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="company_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="trip_invoice_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="type_of_charge" attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
+
+
+                    </group>
+                    <group >
+                            <field name="total_bags" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="total_kms" attrs="{'readonly':[('state','!=','assign_mtc')]}" />
+                            <field name="addition_price" attrs="{'readonly':[('state','!=','assign_mtc')]}"/>
+                            <field name="no_of_times" attrs="{'readonly':[('state','!=','assign_mtc')]}"/>
+<!--                        <div class="o_td_label"></div>-->
+<!--                            <field name="km_charge"/>-->
+<!--                            <field name="betta_charge"/>-->
+                            <field name="final_invoice_amount" style="color:green;"/>
+                        </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+      <record id="brothers_trip_sheet_action" model="ir.actions.act_window">
+        <field name="name">Trip Sheet</field>
+        <field name="res_model">brothers.trip.sheet</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Trip Sheet
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="trip_brothers_sheet" action="brothers_trip_sheet_action"
+              name="Trip Sheet"
+              sequence="5" parent="account.menu_finance_receivables"/>
+
+</odoo>

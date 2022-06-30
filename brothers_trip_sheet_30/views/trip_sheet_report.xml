@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="brothers_trip_date_tree" model="ir.ui.view">
+        <field name="name">brothers.trip.date.form</field>
+        <field name="model">brothers.trip.date</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="type"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+    <record id="brothers_trip_date_view" model="ir.ui.view">
+        <field name="name">brothers.trip.date.form</field>
+        <field name="model">brothers.trip.date</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                <button name="action_trip_marked"
+                        type="object"
+                        string="Mark As Done" states="draft"
+                        class="oe_highlight" id="mark_trip"/>
+                    <field name="state" select="2" widget="statusbar"
+                           statusbar_visible="draft,done"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" name="action_trip_invoices"
+                                string="Trip Invoice" type="object"
+                                attrs="{'invisible':[('trip_invoice_ids','=',False)]}" icon="fa-bars"/>
+                     </div>
+
+
+                    <group>
+                        <group>
+                            <field name="type" widget="radio" options="{'horizontal': true}"/>
+                            <field name="create_date"/>
+                        </group>
+                        <group>
+                            <field name="vehicle_id" attrs="{'invisible': [('type', '!=', 'vehicle')],'required': [('type', '=', 'vehicle')]}"/>
+                            <!--                            <field name="partner_id"/>-->
+                            <field name="trip_invoice_ids" invisible="1"/>
+                        </group>
+
+
+                    </group>
+                    <notebook>
+                        <page string="Report Details">
+                            <field name="date_lines" mode="tree">
+                                <tree>
+                                    <field name="create_date"/>
+                                    <field name="vehicle_id"/>
+                                    <field name="type_of_charge" />
+                                    <field name="trip_rec_id"/>
+                                    <field name="company_id"/>
+                                    <field name="company_type" invisible="1"/>
+                                    <field name="internal_company" invisible="1"/>
+                                    <field name="partner_id"/>
+                                    <field name="total_bags" sum="TBAG"/>
+                                    <field name="total_kms" sum="TOKM"/>
+                                    <field name="km_charge" sum="KM"/>
+                                    <field name="betta_charge" sum="Betta"/>
+                                    <field name="final_invoice_amount" sum="Final"/>
+                                    <field name="from_invoice" invisible="1"/>
+                                    <field name="vehicle_number" invisible="1"/>
+
+                                </tree>
+
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="brothers_trip_date_action" model="ir.actions.act_window">
+        <field name="name">Trip Sheet Report</field>
+        <field name="res_model">brothers.trip.date</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Trip Sheet
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="trip_brothers_date_sheet" action="brothers_trip_date_action"
+              name="Trip Sheet Report"
+              sequence="5" parent="account.menu_finance_receivables"/>
+
+</odoo>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="tripsheet_estimate_inhea" model="ir.ui.view">
+        <field name="name">sale.estimate.form.inherited</field>
+        <field name="model">sale.estimate</field>
+        <field name="inherit_id" ref="ezp_estimate.sale_estimates_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='estimate_ids']/form//field[@name='narration']" position="after">
+                <field name="basic_km" invisible="1"/>
+                <field name="no_of_times" invisible="1"/>
+                <field name="addition_price" invisible="1"/>
+                <field name="bag_sum" invisible="1"/>
+                <field name="trip_amount" invisible="1"/>
+            </xpath>
+        </field>
+
+    </record>
+
+    <record id="sale_report_custom_form_inh" model="ir.ui.view">
+        <field name="name">sale.report.custom.form.inherited</field>
+        <field name="model">sale.report.custom</field>
+        <field name="inherit_id" ref="ezp_cash_collection.sale_report_custom_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='gate_pass']" position="after">
+                <field name="location"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="brothers_trip_sheet_view_inh" model="ir.ui.view">
+        <field name="name">brothers.trip.sheet.form</field>
+        <field name="model">brothers.trip.sheet</field>
+        <field name="inherit_id" ref="brothers_trip_sheet_30.brothers_trip_sheet_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='gate_pass']" position="after">
+                <field name="estimate_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@name='action_trip_marked']" position="before">
+                <button name="assign_to_mtc"
+                        type="object" attrs="{'invisible': [('state', '!=', 'draft')]}"
+                        string="Send To MTC"
+                        class="oe_highlight" id="mark_ss"/>
+
+<!--                <button name="assign_to_mtc"-->
+<!--                        type="object" attrs="{'invisible': [('state', '!=', 'assign_mtc')]}"-->
+<!--                        string="Send To MTC"-->
+<!--                        class="oe_highlight" id="mark_ss"/>-->
+
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

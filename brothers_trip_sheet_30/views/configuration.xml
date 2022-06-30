@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="trip_configuration_tree" model="ir.ui.view">
+        <field name="name">trip.configuration.form</field>
+        <field name="model">trip.configuration</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="type_of_charge"/>
+                <field name="fixed_price"/>
+            </tree>
+        </field>
+    </record>
+    <record id="trip_configuration_view" model="ir.ui.view">
+        <field name="name">trip.configuration.form</field>
+        <field name="model">trip.configuration</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="type_of_charge"/>
+                            <field name="fixed_price" attrs="{'invisible': [['type_of_charge', '=', 'km_price']]}"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Km Details"  attrs="{'invisible': [['type_of_charge', '!=', 'km_price']]}">
+                            <field name="km_lines" mode="tree">
+                                <tree editable="bottom">
+                                    <field name="from_kilo_meter"/>
+                                    <field name="to_kilo_meter"/>
+                                    <field name="price"/>
+                                    <field name="price"/>
+                                </tree>
+
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+      <record id="trip_configuration_action" model="ir.actions.act_window">
+        <field name="name">Trip Configuration</field>
+        <field name="res_model">trip.configuration</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new warr
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="trip_brothers_configuration" action="trip_configuration_action"
+              name="Trip Configuration"
+              sequence="5" parent="account.menu_finance_receivables"/>
+
+</odoo>

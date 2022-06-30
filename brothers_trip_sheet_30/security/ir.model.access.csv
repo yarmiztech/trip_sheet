@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_trip_configuration,trip.configuration,model_trip_configuration,,1,1,1,1
+access_trip_km_lines,trip.km.lines,model_trip_km_lines,,1,1,1,1
+access_bitta_configuration,bitta.configuration,model_bitta_configuration,,1,1,1,1
+access_brothers_trip_sheet,brothers.trip.sheet,model_brothers_trip_sheet,,1,1,1,1
+access_brothers_trip_date,brothers.trip.date,model_brothers_trip_date,,1,1,1,1
+access_brothers_trip_lines_lines,brothers.trip.lines,model_brothers_trip_lines,,1,1,1,1
+access_basic_trip,basic.trip,model_basic_trip,,1,1,1,1
+
